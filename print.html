@@ -547,7 +547,94 @@
 <p>검증 방법: 벡터 데이터를 저장하고 조회하는 테스트 케이스를 작성하고 검증한다.</p>
 </li>
 </ul>
-<h2 id="위-이슈들을-이루기-위한-사전-조사-및-설계"><a class="header" href="#위-이슈들을-이루기-위한-사전-조사-및-설계">위 이슈들을 이루기 위한 사전 조사 및 설계</a></h2>
+<h2 id="사전-조사"><a class="header" href="#사전-조사">사전 조사</a></h2>
+<h3 id="pt_type_sequence"><a class="header" href="#pt_type_sequence">PT_TYPE_SEQUENCE</a></h3>
+<p>grep으로 PT_TYPE_SEQUENCE를 찾아보면 다음과 같이 나타납니다.</p>
+<pre><code class="language-sh">14 src/parser/csql_grammar.y
+13 src/parser/type_checking.c
+13 src/parser/semantic_check.c
+8 src/parser/name_resolution.c
+6 src/parser/parse_tree_cl.c
+5 src/parser/parse_dbi.c
+4 src/parser/parse_tree.h
+4 src/parser/func_type.cpp
+2 src/query/execute_schema.c
+1 src/parser/view_transform.c
+1 src/parser/method_transform.c
+1 src/optimizer/query_rewrite.c
+1 src/optimizer/query_graph.c
+</code></pre>
+<p>위 결과를 보면, PT_TYPE_SEQUENCE를 참고하여 PT_TYPE_VECTOR를 추가하기 위해서는
+csql_grammar, parse_tree_cl, type_checking, semantic_check 파일들이 수정되어야 합니다.</p>
+<p>앞 단부터 차근차근 수정해보겠습니다.</p>
+<h3 id="db_type_sequence"><a class="header" href="#db_type_sequence">DB_TYPE_SEQUENCE</a></h3>
+<p>grep으로 DB_TYPE_SEQUENCE를 찾아보면 다음과 같이 나타납니다.</p>
+<pre><code class="language-sh">21 src/object/transform.c
+17 src/object/class_object.c
+14 src/object/set_object.c
+12 src/object/object_domain.c
+12 src/compat/db_set.c
+12 src/base/object_representation_sr.c
+10 src/storage/catalog_class.c
+10 src/query/query_opfunc.c
+10 src/compat/db_macro.c
+8 src/parser/parse_dbi.c
+8 src/object/object_primitive.c
+5 src/object/object_accessor.c
+5 src/compat/dbtype_function.i
+5 src/broker/cas_execute.c
+4 src/query/cursor.c
+4 src/object/virtual_object.c
+4 src/object/object_representation.c
+4 src/method/query_method.cpp
+4 src/method/method_struct_value.cpp
+4 src/executables/unload_object.c
+3 src/parser/xasl_generation.c
+3 src/object/transform_cl.c
+3 src/compat/cnv.c
+2 src/transaction/log_manager.c
+2 src/storage/system_catalog.c
+2 src/storage/statistics_sr.c
+2 src/sp/jsp_cl.c
+2 src/query/query_executor.c
+2 src/parser/type_checking.c
+2 src/object/object_template.c
+2 src/method/method_query_handler.cpp
+2 src/executables/unload_schema.c
+2 src/executables/unload_object_file.c
+2 src/compat/db_value_printer.cpp
+2 src/compat/dbtype_def.h
+2 src/base/memory_hash.c
+2 src/api/db_value_table.c
+1 src/storage/heap_file.c
+1 src/storage/compactdb_sr.c
+1 src/query/query_dump.c
+1 src/parser/parse_tree_cl.c
+1 src/object/schema_template.c
+1 src/object/object_printer.cpp
+1 src/object/object_domain.h
+1 src/object/authenticate_grant.cpp
+1 src/method/method_query_util.cpp
+1 src/method/method_oid_handler.cpp
+1 src/method/method_invoke_group.cpp
+1 src/loaddb/load_sa_loader.cpp
+1 src/loaddb/load_db_value_converter.cpp
+1 src/executables/esql_translate.c
+1 src/executables/csql_result_format.c
+1 src/executables/compactdb.c
+1 src/compat/db_vdb.c
+1 src/cm_common/cm_dep_tasks.c
+</code></pre>
+<p>이 중 24년 10월 22일 정기 회의에서 언급된 내용에 따라,
+위 두 enum이 겹치는 parser 디렉토리에 있는 파일들을 수정합니다.
+새로 추가될 PT_TYPE_VECTOR와 DB_TYPE_SEQUENCE를 연결하여
+Storage Engine의 디스크 표현 구조를 최대한 변경하지 않은 상태에
+파서 단의 기능들을 구현해보겠습니다.</p>
+<p>따라서, 이번 마일스톤에서는 PT_TYPE_VECTOR와 DB_TYPE_SEQUENCE를 연결하고,
+PT_TYPE_VECTOR를 추가하기 위해 csql_grammar, parse_tree_cl, type_checking, semantic_check 파일들을 수정합니다.</p>
+<p>특히, csql_grammar 파일을 수정하여 PT_TYPE_VECTOR를 추가하고,
+유저로 하여금 간단한 SQL 질의를 통해 벡터 데이터를 저장하고 조회할 수 있도록 합니다.</p>
+<h2 id="진행-과정"><a class="header" href="#진행-과정">진행 과정</a></h2>
 
                     </main>
 
