@@ -37,7 +37,7 @@
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="home.html"><strong aria-hidden="true">1.</strong> Home</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="milestone-1.html"><strong aria-hidden="true">1.1.</strong> Milestone 1</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="home.html"><strong aria-hidden="true">1.</strong> Home</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="milestone-1.html"><strong aria-hidden="true">1.1.</strong> Milestone 1</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -521,34 +521,33 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-1-벡터-데이터-저장-및-조회"><a class="header" href="#milestone-1-벡터-데이터-저장-및-조회">Milestone 1: 벡터 데이터 저장 및 조회</a></h1>
 <div class="table-wrapper"><table><thead><tr><th>구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>설명</th><th>이슈 번호</th></tr></thead><tbody>
 <tr><td>1</td><td>데이터 타입</td><td>벡터 타입 추가</td><td>VECTOR (DIM, TYPE)</td><td></td><td></td></tr>
-<tr><td></td><td></td><td>타입 변환</td><td>문자열 to 벡터 타입</td><td>"varchar -&gt; vector<br>insert 시 '[10, 20, 30]' -&gt; [10, 20, 30]"</td><td></td></tr>
-<tr><td></td><td></td><td></td><td>벡터 타입 to 문자열</td><td>"vector -&gt; varchar<br>select 시 [10, 20, 30] -&gt; '[10, 20, 30]'"</td><td></td></tr>
-<tr><td></td><td>파서(syntax)</td><td>클래스</td><td>벡터 타입 컬럼 처리</td><td>"클래스 생성 시 벡터 타입 처리<br>create table tbl1 (col1 vector(3));"</td><td></td></tr>
-<tr><td></td><td></td><td>데이터</td><td>벡터 데이터 처리</td><td>"문자열을 벡터 데이터로 변환<br>insert into tbl1 values ('[10, 20, 30]');"</td><td></td></tr>
-<tr><td></td><td>힙/로케이터</td><td>클래스</td><td>벡터 타입 컬럼 정보 저장</td><td>"스키마 정보 저장<br>메모리 표현 구조 - 디스크 표현 구조 (직렬화)"</td><td></td></tr>
-<tr><td></td><td></td><td></td><td>벡터 타입 컬럼 정보 조회</td><td>"스키마 정보 참조<br>디스크 표현 구조 - 메모리 표현 구조 (역직렬화)"</td><td></td></tr>
+<tr><td></td><td></td><td>타입 변환</td><td>문자열 to 벡터 타입</td><td>“varchar -&gt; vector<br>insert 시 ‘[10, 20, 30]’ -&gt; [10, 20, 30]”</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>벡터 타입 to 문자열</td><td>“vector -&gt; varchar<br>select 시 [10, 20, 30] -&gt; ‘[10, 20, 30]’”</td><td></td></tr>
+<tr><td></td><td>파서(syntax)</td><td>클래스</td><td>벡터 타입 컬럼 처리</td><td>“클래스 생성 시 벡터 타입 처리<br>create table tbl1 (col1 vector(3));”</td><td></td></tr>
+<tr><td></td><td></td><td>데이터</td><td>벡터 데이터 처리</td><td>“문자열을 벡터 데이터로 변환<br>insert into tbl1 values (‘[10, 20, 30]’);”</td><td></td></tr>
+<tr><td></td><td>힙/로케이터</td><td>클래스</td><td>벡터 타입 컬럼 정보 저장</td><td>“스키마 정보 저장<br>메모리 표현 구조 - 디스크 표현 구조 (직렬화)”</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>벡터 타입 컬럼 정보 조회</td><td>“스키마 정보 참조<br>디스크 표현 구조 - 메모리 표현 구조 (역직렬화)”</td><td></td></tr>
 <tr><td></td><td></td><td>데이터</td><td>벡터 데이터 삽입</td><td>벡터 데이터 직렬화</td><td></td></tr>
 <tr><td></td><td></td><td></td><td>벡터 데이터 조회</td><td>벡터 데이터 역직렬화</td><td></td></tr>
 <tr><td></td><td>유틸리티</td><td>csql</td><td>벡터 타입 컬럼 정보 조회</td><td>desc tbl1;</td><td></td></tr>
-<tr><td></td><td></td><td></td><td>벡터 타입 데이터 조회 (full table scan)</td><td>"stdout에 벡터 데이터 출력<br>col1<br>---<br>[10, 20, 30]<br>[20, 30, 40]"</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>벡터 타입 데이터 조회 (full table scan)</td><td>“stdout에 벡터 데이터 출력<br>col1<br>—<br>[10, 20, 30]<br>[20, 30, 40]”</td><td></td></tr>
 </tbody></table>
 </div>
 <ul>
-<li>작성하신 위 마일스톤을 참고하여, 아래의 내용을 작성하였습니다.</li>
+<li>
+<p>목적: 벡터 데이터 저장 및 조회</p>
+</li>
+<li>
+<p>설명: 벡터 데이터를 저장하고 조회할 수 있도록 CUBRID에 벡터 타입을 추가한다.</p>
+</li>
+<li>
+<p>구현 방법: 벡터 타입을 추가하고, 벡터 데이터를 직렬화하여 저장하고 역직렬화하여 조회한다.</p>
+</li>
+<li>
+<p>검증 방법: 벡터 데이터를 저장하고 조회하는 테스트 케이스를 작성하고 검증한다.</p>
+</li>
 </ul>
-<h2 id="제-1-목표-벡터-타입-추가"><a class="header" href="#제-1-목표-벡터-타입-추가">제 1 목표: 벡터 타입 추가</a></h2>
-<h3 id=""><a class="header" href="#"></a></h3>
-<h2 id="data-type"><a class="header" href="#data-type">Data Type</a></h2>
-<h3 id="벡터-타입-추가"><a class="header" href="#벡터-타입-추가">벡터 타입 추가</a></h3>
-<p>임시적으로 disk vector 타입 추가</p>
-<h4 id="vectordim-type"><a class="header" href="#vectordim-type">VECTOR(DIM, TYPE)</a></h4>
-<h4 id="varchar-to-vec"><a class="header" href="#varchar-to-vec">Varchar to Vec</a></h4>
-<h4 id="vec-to-varchar"><a class="header" href="#vec-to-varchar">Vec to Varchar</a></h4>
-<h2 id="parser"><a class="header" href="#parser">Parser</a></h2>
-<h2 id="heap--locator"><a class="header" href="#heap--locator">Heap / Locator</a></h2>
-<h2 id="utility"><a class="header" href="#utility">Utility</a></h2>
-<h1 id="subtasks"><a class="header" href="#subtasks">Subtasks</a></h1>
-<h2 id="survey-issue-1"><a class="header" href="#survey-issue-1">Survey Issue 1</a></h2>
+<h2 id="위-이슈들을-이루기-위한-사전-조사-및-설계"><a class="header" href="#위-이슈들을-이루기-위한-사전-조사-및-설계">위 이슈들을 이루기 위한 사전 조사 및 설계</a></h2>
 
                     </main>
 
