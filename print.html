@@ -1,0 +1,612 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cubvec Plan</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="home.html"><strong aria-hidden="true">1.</strong> Home</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="milestone-1.html"><strong aria-hidden="true">1.1.</strong> Milestone 1</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cubvec Plan</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="cubvec-planning-and-product-management"><a class="header" href="#cubvec-planning-and-product-management">CUBVEC Planning and Product Management</a></h1>
+<h2 id="마일스톤-1-벡터-데이터-저장-및-조회"><a class="header" href="#마일스톤-1-벡터-데이터-저장-및-조회">마일스톤 1: 벡터 데이터 저장 및 조회</a></h2>
+<h3 id="1-벡터-데이터-저장-및-조회"><a class="header" href="#1-벡터-데이터-저장-및-조회">1. 벡터 데이터 저장 및 조회</a></h3>
+<ul>
+<li>벡터 데이터를 저장할 수 있다.</li>
+<li><code>csql</code>을 사용하여 벡터 데이터를 조회할 수 있다. (전체 테이블 스캔)</li>
+</ul>
+<h3 id="2-대용량-벡터-데이터-벌크-로딩-및-동등-연산자-제공"><a class="header" href="#2-대용량-벡터-데이터-벌크-로딩-및-동등-연산자-제공">2. 대용량 벡터 데이터 벌크 로딩 및 동등 연산자 제공</a></h3>
+<ul>
+<li><code>csql</code>을 통해 대용량 벡터 데이터를 벌크 로딩할 수 있다.<br />
+<em>(벌크 로딩 도구는 검토 후 변경 가능)</em></li>
+<li>벡터 타입에 대해 <code>=</code> 연산자를 제공한다.
+<ul>
+<li>예시: <code>SELECT * FROM tbl1 WHERE col1 = '[10, 20, 30]';</code></li>
+<li><em>(우선순위 변경 가능)</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-k-nn-검색-기능-추가"><a class="header" href="#3-k-nn-검색-기능-추가">3. k-NN 검색 기능 추가</a></h3>
+<ul>
+<li>k-NN 검색을 수행할 수 있다. (유클리드 거리 기반)
+<ul>
+<li>kd-tree 사용 <em>(고려 대상)</em></li>
+<li><em>(성능 측정 시 충돌(crash)이 발생하면 재구성이 필수)</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="마일스톤-2-hnsw-인덱스-생성-및-관리"><a class="header" href="#마일스톤-2-hnsw-인덱스-생성-및-관리">마일스톤 2: HNSW 인덱스 생성 및 관리</a></h2>
+<h3 id="1-hnsw-인덱스-생성"><a class="header" href="#1-hnsw-인덱스-생성">1. HNSW 인덱스 생성</a></h3>
+<ul>
+<li>HNSW 인덱스를 생성할 수 있다. (유클리드 거리 기반)
+<ul>
+<li>HNSW 오픈소스 포팅</li>
+</ul>
+</li>
+<li><code>csql</code>을 사용해 인덱스 정보를 조회할 수 있다. (유클리드 거리 기반)
+<ul>
+<li><em>(우선순위 변경 가능)</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-hnsw-인덱스-빌드-및-데이터-추가"><a class="header" href="#2-hnsw-인덱스-빌드-및-데이터-추가">2. HNSW 인덱스 빌드 및 데이터 추가</a></h3>
+<ul>
+<li>HNSW 인덱스를 빌드할 수 있다. (유클리드 거리 기반)
+<ul>
+<li>데이터 포함 및 데이터 제외 모두 가능</li>
+<li>메모리 기반과 디스크 기반 선택에 따라 인덱스 복구 메커니즘에 영향이 있음</li>
+</ul>
+</li>
+<li>HNSW 인덱스에 데이터를 추가할 수 있다. (유클리드 거리 기반)</li>
+<li>k-ANN 검색을 수행할 수 있다. (유클리드 거리 기반)
+<ul>
+<li><em>(성능 측정 시 충돌(crash)이 발생하면 재구성이 필수)</em></li>
+<li>기한: ~내년 6월</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="마일스톤-3-hnsw-인덱스-복구-및-트랜잭션-처리"><a class="header" href="#마일스톤-3-hnsw-인덱스-복구-및-트랜잭션-처리">마일스톤 3: HNSW 인덱스 복구 및 트랜잭션 처리</a></h2>
+<h3 id="1-hnsw-인덱스-복구"><a class="header" href="#1-hnsw-인덱스-복구">1. HNSW 인덱스 복구</a></h3>
+<ul>
+<li>HNSW 인덱스를 복구할 수 있다. (대용량 데이터)
+<ul>
+<li>메모리 기반 HNSW 인덱스:
+<ul>
+<li>서버 재시작 시 재빌드 가능</li>
+<li>또는 메모리 기반 복구 메커니즘 개발 필요</li>
+</ul>
+</li>
+<li>디스크 기반 HNSW 인덱스:
+<ul>
+<li>디스크에 HNSW 인덱스 저장 구조 정의</li>
+<li>HNSW 인덱스의 REDO/UNDO 메커니즘 추가</li>
+</ul>
+</li>
+<li><em>(QA 팀 성능 측정 시점)</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-트랜잭션-롤백-및-동시성-지원"><a class="header" href="#2-트랜잭션-롤백-및-동시성-지원">2. 트랜잭션 롤백 및 동시성 지원</a></h3>
+<ul>
+<li>트랜잭션이 HNSW 인덱스의 변경 사항을 롤백할 수 있다.</li>
+<li>HNSW 인덱스는 트랜잭션 동시성(MVCC)을 지원한다.
+<ul>
+<li><em>(성능 측정에 영향을 줄 수 있는 요소)</em></li>
+<li><em>(제품 릴리즈 시 필수, 국책 과제 보고 시 선택)</em></li>
+<li><em>(우선순위 변경 가능)</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="마일스톤-4-다양한-거리-연산자-및-함수-지원"><a class="header" href="#마일스톤-4-다양한-거리-연산자-및-함수-지원">마일스톤 4: 다양한 거리 연산자 및 함수 지원</a></h2>
+<h3 id="1-다양한-거리-연산자-지원"><a class="header" href="#1-다양한-거리-연산자-지원">1. 다양한 거리 연산자 지원</a></h3>
+<ul>
+<li>다양한 거리 연산자를 지원할 수 있다:
+<ul>
+<li><code>&lt;#&gt;</code>: negative inner product</li>
+<li><code>&lt;=&gt;</code>: 코사인 거리</li>
+<li><code>&lt;+&gt;</code>: L1 거리, 등</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-다양한-거리-함수-지원"><a class="header" href="#2-다양한-거리-함수-지원">2. 다양한 거리 함수 지원</a></h3>
+<ul>
+<li>다양한 거리 함수를 지원할 수 있다:
+<ul>
+<li><code>l2_distance()</code>: 유클리드 거리</li>
+<li><code>inner_product()</code></li>
+<li><code>cosine_distance()</code></li>
+<li><code>l1_distance()</code>: 택시캡 거리, 등</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-hnsw-인덱스-생성-시-거리-함수-선택"><a class="header" href="#3-hnsw-인덱스-생성-시-거리-함수-선택">3. HNSW 인덱스 생성 시 거리 함수 선택</a></h3>
+<ul>
+<li>HNSW 인덱스 생성 시 거리 함수를 선택할 수 있다.</li>
+</ul>
+<h3 id="4-기타-벡터-함수-지원"><a class="header" href="#4-기타-벡터-함수-지원">4. 기타 벡터 함수 지원</a></h3>
+<ul>
+<li>기타 벡터 함수를 지원할 수 있다:
+<ul>
+<li><code>vector_dims()</code></li>
+<li><code>vector_norm()</code>, 등</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="기타-작업-업데이트-예정"><a class="header" href="#기타-작업-업데이트-예정">기타 작업 (업데이트 예정)</a></h2>
+<ul>
+<li>벡터 데이터 갱신, 삭제, 업서트(upsert) 기능.</li>
+<li>스키마 변경 (벡터 타입 컬럼 추가/제거).</li>
+<li>벡터 타입 이항 연산자 (<code>+</code>, <code>-</code>, <code>*</code>, <code>||</code>, 등) 제공.</li>
+<li>벡터 타입 집계 함수 (<code>AVG()</code>, <code>SUM()</code>, 등) 제공.</li>
+<li>SQL 힌트.</li>
+<li>SQL 실행 최적화.</li>
+<li>다양한 벡터 타입 지원.</li>
+<li>다양한 인덱스 지원 (예: IVFFlat).</li>
+<li>벡터 관련 시스템 카탈로그 지원.</li>
+<li>JSON, CLOB 등으로 변환 지원.</li>
+<li>에러 처리:
+<ul>
+<li>잘못된 차원의 벡터 데이터 삽입.</li>
+<li>벡터 타입이 아닌 컬럼에 벡터 인덱스 생성.</li>
+<li>벡터 타입 컬럼에 B-트리 인덱스 생성, 등.</li>
+</ul>
+</li>
+<li>제약 사항 처리:
+<ul>
+<li>벡터 타입 컬럼에 PK, FK 등 제약 조건 생성.</li>
+<li>벡터 타입 기준 파티션 테이블 생성.</li>
+<li>벡터 타입 컬럼을 조인 조건으로 사용, 등.</li>
+</ul>
+</li>
+<li>JDBC 및 기타 드라이버.</li>
+<li>성능 모니터링/디버깅.</li>
+<li>다른 DB와의 호환성.</li>
+<li>마이그레이션.</li>
+</ul>
+<hr />
+<h2 id="포함되지-않음"><a class="header" href="#포함되지-않음">포함되지 않음</a></h2>
+<ul>
+<li>D사의 인덱스 포함</li>
+</ul>
+<hr />
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<h2 id="milestone-1"><a class="header" href="#milestone-1">Milestone 1</a></h2>
+<h3 id="1-vector-data-storage-and-querying"><a class="header" href="#1-vector-data-storage-and-querying">1. Vector Data Storage and Querying</a></h3>
+<ul>
+<li>Vector data can be stored.</li>
+<li>Can query vector data with <code>csql</code> (full table scan).</li>
+</ul>
+<h3 id="2-bulk-loading-and-equality-operator-for-vector-data"><a class="header" href="#2-bulk-loading-and-equality-operator-for-vector-data">2. Bulk Loading and Equality Operator for Vector Data</a></h3>
+<ul>
+<li>Can bulk load a large volume of vector data via <code>csql</code>.<br />
+<em>(Bulk loading tool can be changed after review.)</em></li>
+<li>Provides <code>=</code> operator for vector types in <code>SELECT</code> statements.
+<ul>
+<li>Example: <code>SELECT * FROM tbl1 WHERE col1 = '[10, 20, 30]';</code></li>
+<li><em>(Priority may change.)</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-k-nn-search"><a class="header" href="#3-k-nn-search">3. k-NN Search</a></h3>
+<ul>
+<li>Can perform k-NN search (Euclidean distance).
+<ul>
+<li>Using kd-tree <em>(to be considered)</em>.</li>
+<li><em>(If performance measurement causes crashes, restructuring is mandatory.)</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="milestone-2"><a class="header" href="#milestone-2">Milestone 2</a></h2>
+<h3 id="1-hnsw-index-creation"><a class="header" href="#1-hnsw-index-creation">1. HNSW Index Creation</a></h3>
+<ul>
+<li>Can create HNSW index (Euclidean distance).
+<ul>
+<li>HNSW open-source porting.</li>
+</ul>
+</li>
+<li>Can query index information via <code>csql</code> (Euclidean distance).
+<ul>
+<li><em>(Priority may change.)</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-hnsw-index-building-and-data-insertion"><a class="header" href="#2-hnsw-index-building-and-data-insertion">2. HNSW Index Building and Data Insertion</a></h3>
+<ul>
+<li>Can build HNSW index (Euclidean distance).
+<ul>
+<li>With data and without data.</li>
+<li>Need to choose between memory-based and disk-based, affecting index recovery mechanisms.</li>
+</ul>
+</li>
+<li>Can add data to HNSW index (Euclidean distance).</li>
+<li>Can perform k-ANN search (Euclidean distance).
+<ul>
+<li><em>(If performance measurement causes crashes, restructuring is mandatory.)</em></li>
+<li>Deadline: ~Next June</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="milestone-3"><a class="header" href="#milestone-3">Milestone 3</a></h2>
+<h3 id="1-hnsw-index-recovery"><a class="header" href="#1-hnsw-index-recovery">1. HNSW Index Recovery</a></h3>
+<ul>
+<li>Can recover HNSW index (large data volumes).
+<ul>
+<li>Memory-based HNSW index:
+<ul>
+<li>Rebuild on server restart.</li>
+<li>Or develop memory-based recovery mechanism.</li>
+</ul>
+</li>
+<li>Disk-based HNSW index:
+<ul>
+<li>Define disk storage structure for HNSW index.</li>
+<li>Add REDO/UNDO mechanism for HNSW index.</li>
+</ul>
+</li>
+<li><em>(QA team performance measurement point.)</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-transactional-rollback-and-concurrency"><a class="header" href="#2-transactional-rollback-and-concurrency">2. Transactional Rollback and Concurrency</a></h3>
+<ul>
+<li>Can rollback HNSW index changes with transactions.</li>
+<li>HNSW index supports transaction concurrency (MVCC).
+<ul>
+<li><em>(May affect performance measurement.)</em></li>
+<li><em>(Mandatory for product release; optional for national project reporting.)</em></li>
+<li><em>(Priority may change.)</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="milestone-4"><a class="header" href="#milestone-4">Milestone 4</a></h2>
+<h3 id="1-support-for-various-distance-operators"><a class="header" href="#1-support-for-various-distance-operators">1. Support for Various Distance Operators</a></h3>
+<ul>
+<li>Can support various distance operators:
+<ul>
+<li><code>&lt;#&gt;</code>: negative inner product</li>
+<li><code>&lt;=&gt;</code>: cosine distance</li>
+<li><code>&lt;+&gt;</code>: L1 distance, etc.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-support-for-various-distance-functions"><a class="header" href="#2-support-for-various-distance-functions">2. Support for Various Distance Functions</a></h3>
+<ul>
+<li>Can support various distance functions:
+<ul>
+<li><code>l2_distance()</code>: Euclidean distance</li>
+<li><code>inner_product()</code></li>
+<li><code>cosine_distance()</code></li>
+<li><code>l1_distance()</code>: taxicab distance, etc.</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-distance-function-selection-for-hnsw-index-creation"><a class="header" href="#3-distance-function-selection-for-hnsw-index-creation">3. Distance Function Selection for HNSW Index Creation</a></h3>
+<ul>
+<li>Can choose distance function when creating HNSW index.</li>
+</ul>
+<h3 id="4-support-for-other-vector-functions"><a class="header" href="#4-support-for-other-vector-functions">4. Support for Other Vector Functions</a></h3>
+<ul>
+<li>Can support additional vector functions:
+<ul>
+<li><code>vector_dims()</code></li>
+<li><code>vector_norm()</code>, etc.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="other-tasks-to-be-updated"><a class="header" href="#other-tasks-to-be-updated">Other Tasks (To Be Updated)</a></h2>
+<ul>
+<li>Vector data update, delete, upsert.</li>
+<li>Schema changes (adding/removing vector type columns).</li>
+<li>Vector type binary operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>||</code>, etc.).</li>
+<li>Vector type aggregate functions (<code>AVG()</code>, <code>SUM()</code>, etc.).</li>
+<li>SQL hints.</li>
+<li>SQL execution optimization.</li>
+<li>Support for various vector types.</li>
+<li>Support for various indexes (e.g., IVFFlat).</li>
+<li>Support for vector-related system catalogs.</li>
+<li>Conversion to JSON, CLOB, etc.</li>
+<li>Error handling:
+<ul>
+<li>Insertion of incorrect dimension vector data.</li>
+<li>Creation of vector index on non-vector column.</li>
+<li>Creation of B-tree index on vector type column, etc.</li>
+</ul>
+</li>
+<li>Constraint handling:
+<ul>
+<li>Creation of PK, FK constraints on vector type columns.</li>
+<li>Creation of partition tables based on vector type columns.</li>
+<li>Using vector type columns as join conditions, etc.</li>
+</ul>
+</li>
+<li>JDBC and other drivers.</li>
+<li>Performance monitoring/debugging.</li>
+<li>Compatibility with other databases.</li>
+<li>Migration.</li>
+</ul>
+<hr />
+<h3 id="not-included"><a class="header" href="#not-included">Not Included</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-1-벡터-데이터-저장-및-조회"><a class="header" href="#milestone-1-벡터-데이터-저장-및-조회">Milestone 1: 벡터 데이터 저장 및 조회</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>설명</th><th>이슈 번호</th></tr></thead><tbody>
+<tr><td>1</td><td>데이터 타입</td><td>벡터 타입 추가</td><td>VECTOR (DIM, TYPE)</td><td></td><td></td></tr>
+<tr><td></td><td></td><td>타입 변환</td><td>문자열 to 벡터 타입</td><td>"varchar -&gt; vector<br>insert 시 '[10, 20, 30]' -&gt; [10, 20, 30]"</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>벡터 타입 to 문자열</td><td>"vector -&gt; varchar<br>select 시 [10, 20, 30] -&gt; '[10, 20, 30]'"</td><td></td></tr>
+<tr><td></td><td>파서(syntax)</td><td>클래스</td><td>벡터 타입 컬럼 처리</td><td>"클래스 생성 시 벡터 타입 처리<br>create table tbl1 (col1 vector(3));"</td><td></td></tr>
+<tr><td></td><td></td><td>데이터</td><td>벡터 데이터 처리</td><td>"문자열을 벡터 데이터로 변환<br>insert into tbl1 values ('[10, 20, 30]');"</td><td></td></tr>
+<tr><td></td><td>힙/로케이터</td><td>클래스</td><td>벡터 타입 컬럼 정보 저장</td><td>"스키마 정보 저장<br>메모리 표현 구조 - 디스크 표현 구조 (직렬화)"</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>벡터 타입 컬럼 정보 조회</td><td>"스키마 정보 참조<br>디스크 표현 구조 - 메모리 표현 구조 (역직렬화)"</td><td></td></tr>
+<tr><td></td><td></td><td>데이터</td><td>벡터 데이터 삽입</td><td>벡터 데이터 직렬화</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>벡터 데이터 조회</td><td>벡터 데이터 역직렬화</td><td></td></tr>
+<tr><td></td><td>유틸리티</td><td>csql</td><td>벡터 타입 컬럼 정보 조회</td><td>desc tbl1;</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>벡터 타입 데이터 조회 (full table scan)</td><td>"stdout에 벡터 데이터 출력<br>col1<br>---<br>[10, 20, 30]<br>[20, 30, 40]"</td><td></td></tr>
+</tbody></table>
+</div>
+<ul>
+<li>작성하신 위 마일스톤을 참고하여, 아래의 내용을 작성하였습니다.</li>
+</ul>
+<h2 id="제-1-목표-벡터-타입-추가"><a class="header" href="#제-1-목표-벡터-타입-추가">제 1 목표: 벡터 타입 추가</a></h2>
+<h3 id=""><a class="header" href="#"></a></h3>
+<h2 id="data-type"><a class="header" href="#data-type">Data Type</a></h2>
+<h3 id="벡터-타입-추가"><a class="header" href="#벡터-타입-추가">벡터 타입 추가</a></h3>
+<p>임시적으로 disk vector 타입 추가</p>
+<h4 id="vectordim-type"><a class="header" href="#vectordim-type">VECTOR(DIM, TYPE)</a></h4>
+<h4 id="varchar-to-vec"><a class="header" href="#varchar-to-vec">Varchar to Vec</a></h4>
+<h4 id="vec-to-varchar"><a class="header" href="#vec-to-varchar">Vec to Varchar</a></h4>
+<h2 id="parser"><a class="header" href="#parser">Parser</a></h2>
+<h2 id="heap--locator"><a class="header" href="#heap--locator">Heap / Locator</a></h2>
+<h2 id="utility"><a class="header" href="#utility">Utility</a></h2>
+<h1 id="subtasks"><a class="header" href="#subtasks">Subtasks</a></h1>
+<h2 id="survey-issue-1"><a class="header" href="#survey-issue-1">Survey Issue 1</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
