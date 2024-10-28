@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="home.html"><strong aria-hidden="true">1.</strong> Home</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="milestone-1.html"><strong aria-hidden="true">1.1.</strong> Milestone 1</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="issue-creation-guide.html"><strong aria-hidden="true">1.</strong> Issue Creation Guide</a></li><li class="chapter-item "><a href="home.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li class="chapter-item "><a href="milestone-1.html"><strong aria-hidden="true">3.</strong> Milestone 1</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -174,7 +174,132 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="cubvec-planning-and-product-management"><a class="header" href="#cubvec-planning-and-product-management">CUBVEC Planning and Product Management</a></h1>
+                        <h1 id="issue-creation-guide"><a class="header" href="#issue-creation-guide">Issue Creation Guide</a></h1>
+<h2 id="전제"><a class="header" href="#전제"><strong>전제</strong></a></h2>
+<p>기존 가이드 문서의 규칙을 최대한 준수하며, CubVec에서 생성하는 모든 이슈는
+큐브리드의 연구소 직원뿐만 아니라 기술지원, 영업 등 누구나 열람할 수 있도록 작성합니다.
+이를 통해 모든 구성원이 프로젝트의 진행 상황을 파악할 수 있습니다.</p>
+<hr />
+<h2 id="이슈-타입-정의"><a class="header" href="#이슈-타입-정의"><strong>이슈 타입 정의</strong></a></h2>
+<ul>
+<li><strong>Development Subject (Epic)</strong>: 프로젝트의 주요 목표나 기능 개발을 위한 이슈에 사용합니다.</li>
+<li><strong>Task</strong>: 조사, 코드 분석, 연구 등에 사용하며, 구체적인 기대 결과와 산출물이 있는 이슈에 할당합니다.</li>
+<li><strong>기타</strong>: 기존 이슈 타입은 동일하게 유지합니다.</li>
+</ul>
+<hr />
+<h2 id="이슈-작성-포맷"><a class="header" href="#이슈-작성-포맷"><strong>이슈 작성 포맷</strong></a></h2>
+<h3 id="1-전제"><a class="header" href="#1-전제"><strong>1. 전제</strong></a></h3>
+<ul>
+<li><strong>Epic과 조사/코드 분석</strong> 이슈는 명확한 목적성을 가지고 작성해야 합니다.</li>
+<li>특히 <strong>조사/코드 분석</strong>의 경우 기대 결과와 산출물이 명확히 제시되어야 합니다.</li>
+<li><strong>Epic</strong>은 프로젝트에 참여하지 않은 구성원도 이해할 수 있는 수준에서 작성하되,
+완료 시점에 기능이 어떻게 동작할지 하이레벨 수준에서 전달하는 것이 중요합니다.</li>
+</ul>
+<h3 id="2-이슈-작성-항목"><a class="header" href="#2-이슈-작성-항목"><strong>2. 이슈 작성 항목</strong></a></h3>
+<ul>
+<li><strong>Epic (Development Subject)</strong></li>
+</ul>
+<pre><code class="language-md">- Goals
+- Description
+- Expected Results (User Level)
+</code></pre>
+<ul>
+<li>
+<p><strong>Goals</strong>:</p>
+<ul>
+<li>달성해야 할 목표를 간결하게 명확히 기술합니다. 이를 통해 **무엇(WHAT)**을 수행하는지 한눈에 파악할 수 있도록 합니다.</li>
+<li><strong>목표는 우선순위 순으로 번호</strong>를 매기며, 세부 설명은 <strong>Description</strong> 항목에 작성하므로 간단하게 작성합니다.</li>
+<li><strong>Goals의 번호와 sub-task 또는 child 이슈 간 매칭</strong>이 가장 이상적이나, 꼭 일치할 필요는 없습니다.</li>
+<li>목표를 완료한 이슈는 해당 목표 옆에 링크를 추가하여 후술합니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>Description</strong>:</p>
+<ul>
+<li><strong>Goals 항목에 기술된 목표를 구체적으로 설명</strong>합니다.</li>
+<li>**왜(WHY)와 어떻게(HOW)**를 중심으로 기술하며, 필요에 따라 <strong>언제(WHEN)</strong> 수행되는지도 포함할 수 있습니다.</li>
+<li>Goals의 번호에 맞춰 설명을 작성합니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>Expected Results (User Level)</strong>:</p>
+<ul>
+<li>Epic이 완료되었을 때, <strong>사용자 관점에서 기대할 수 있는 결과</strong>를 작성합니다.</li>
+<li>예를 들어, <code>"CREATE TABLE tbl (embedding VECTOR(1024)); 을 수행하여 벡터 타입을 갖는 테이블을 생성할 수 있습니다.”</code>와 같은 구체적인 예시를 작성할 수 있습니다.</li>
+<li><strong>Expected Results</strong>는 <strong>Goals</strong>와 구별되는 결과를 다룹니다.</li>
+<li>사용자 관점의 기대 결과가 없거나 Goals와 중복된다면 생략할 수 있습니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>예시</strong>:</p>
+<ul>
+<li><strong>Goals</strong>:
+<ul>
+<li>VECTOR 타입 추가</li>
+<li>CREATE TABLE 구문에서 VECTOR 타입 지원을 위한 파서 수정</li>
+<li>VECTOR 타입 스키마 정보 조회 지원</li>
+</ul>
+</li>
+<li><strong>Expected Results</strong>:
+<ul>
+<li><code>csql</code>에서 VECTOR 타입을 갖는 테이블 생성 가능<br />
+예) <code>CREATE TABLE tbl (embedding VECTOR(1024));</code></li>
+<li><code>csql</code>에서 VECTOR 타입을 포함한 테이블의 스키마 정보 조회 가능<br />
+예) <code>desc tbl;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Survey (Task)</strong></p>
+</li>
+</ul>
+<pre><code class="language-md">- Goals
+- Description
+- Results
+</code></pre>
+<ul>
+<li>
+<p><strong>Goals</strong>:</p>
+<ul>
+<li>조사 목적 및 목표를 명확히 기술합니다.</li>
+<li>Epic의 Goals 작성 방식과 동일하게 적용합니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>Description</strong>:</p>
+<ul>
+<li>조사 목표와 배경에 대한 구체적인 설명을 작성하며, Epic의 Description과 동일한 포맷으로 작성합니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>Results</strong>:</p>
+<ul>
+<li>조사 수행 결과를 작성합니다.</li>
+<li>필요에 따라 <strong>ppt, pdf 등 문서 자료</strong>로 대체할 수 있습니다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-이슈-제목-헤딩-규칙"><a class="header" href="#3-이슈-제목-헤딩-규칙"><strong>3. 이슈 제목 헤딩 규칙</strong></a></h3>
+<ul>
+<li>메일이나 칸반 보드에서 이슈 성격을 쉽게 파악할 수 있도록, 제목 앞에 이슈 타입을 붙입니다.</li>
+<li><strong>[Epic]</strong>: Development Subject 타입의 Epic 이슈를 의미합니다.</li>
+<li><strong>[Survey]</strong>: Task 타입의 이슈로, 타 DB 조사, 논문 세미나, 코드 분석 등을 포함합니다.</li>
+</ul>
+<p>추가적인 이슈 타입이 필요한 경우 상황에 맞게 확장 가능합니다.</p>
+<hr />
+<h3 id="기타-참고-사항"><a class="header" href="#기타-참고-사항"><strong>기타 참고 사항</strong></a></h3>
+<ul>
+<li><strong>Epic 작성 시 고려할 사항</strong>:
+<ul>
+<li>가능한 <strong>최대 5개 이하의 sub-task 또는 child 이슈</strong>로 구성합니다.</li>
+<li>하위 이슈가 과도하게 많아질 경우, 목표가 지나치게 많다는 신호일 수 있으며, 이는 일정 관리에 어려움을 줄 수 있습니다.</li>
+<li>따라서 Epic 작성 시 <strong>핵심적인 목표</strong>를 선정하며, 반드시 마일스톤, 일정표와 일대일 매핑될 필요는 없습니다.<br />
+예) 다수의 Epic이 하나의 마일스톤을 구성할 수 있습니다.</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cubvec-planning-and-product-management"><a class="header" href="#cubvec-planning-and-product-management">CUBVEC Planning and Product Management</a></h1>
 <h2 id="마일스톤-1-벡터-데이터-저장-및-조회"><a class="header" href="#마일스톤-1-벡터-데이터-저장-및-조회">마일스톤 1: 벡터 데이터 저장 및 조회</a></h2>
 <h3 id="1-벡터-데이터-저장-및-조회"><a class="header" href="#1-벡터-데이터-저장-및-조회">1. 벡터 데이터 저장 및 조회</a></h3>
 <ul>
