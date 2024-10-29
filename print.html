@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="issue-creation-guide.html"><strong aria-hidden="true">1.</strong> Issue Creation Guide</a></li><li class="chapter-item "><a href="home.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li class="chapter-item "><a href="milestone-1.html"><strong aria-hidden="true">3.</strong> Milestone 1</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="issue-creation-guide.html"><strong aria-hidden="true">1.</strong> Issue Creation Guide</a></li><li class="chapter-item "><a href="home.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li class="chapter-item "><a href="milestone-1-1.html"><strong aria-hidden="true">3.</strong> Milestone 1-1</a></li><li class="chapter-item "><a href="milestone-1-survey-1.html"><strong aria-hidden="true">4.</strong> Survey Issue</a></li><li class="chapter-item "><a href="epic-1.html"><strong aria-hidden="true">5.</strong> Epic 1</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -760,6 +760,89 @@ PT_TYPE_VECTOR를 추가하기 위해 csql_grammar, parse_tree_cl, type_checking
 <p>특히, csql_grammar 파일을 수정하여 PT_TYPE_VECTOR를 추가하고,
 유저로 하여금 간단한 SQL 질의를 통해 벡터 데이터를 저장하고 조회할 수 있도록 합니다.</p>
 <h2 id="진행-과정"><a class="header" href="#진행-과정">진행 과정</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="survey-pt_type_sequence-및-db_type_sequence-조사"><a class="header" href="#survey-pt_type_sequence-및-db_type_sequence-조사"><strong>[Survey] PT_TYPE_SEQUENCE 및 DB_TYPE_SEQUENCE 조사</strong></a></h1>
+<h3 id="goals"><a class="header" href="#goals">Goals</a></h3>
+<ul>
+<li><strong>PT_TYPE_SEQUENCE와 DB_TYPE_SEQUENCE 분석</strong>: Cubrid의 기존 <code>PT_TYPE_SEQUENCE</code> 및 <code>DB_TYPE_SEQUENCE</code> 구현 방식을 분석하여, <code>PT_TYPE_VECTOR</code>와의 연결 및 확장 가능성을 탐색합니다.</li>
+<li><strong>필요 파일 수정 항목 정의</strong>: <code>PT_TYPE_VECTOR</code>를 추가하고 연동하기 위해 수정이 필요한 파일 및 코드를 식별하고 목록화합니다.</li>
+</ul>
+<h3 id="description"><a class="header" href="#description">Description</a></h3>
+<p>이 조사는 CubVec 프로젝트에서 <code>PT_TYPE_SEQUENCE</code>와 <code>DB_TYPE_SEQUENCE</code> 구조를 분석하여 새로운 벡터 타입(<code>PT_TYPE_VECTOR</code>)의 추가 가능성을 평가하는 데 목적이 있습니다. PT_TYPE 및 DB_TYPE 구조의 변경을 통해 파서 단에서 벡터 타입을 지원하고, Cubrid 엔진에 벡터 데이터 타입을 연동하는 첫 단계입니다.</p>
+<h4 id="조사를-통해-다룰-사항"><a class="header" href="#조사를-통해-다룰-사항">조사를 통해 다룰 사항</a></h4>
+<ol>
+<li>
+<p><strong>현재 <code>PT_TYPE_SEQUENCE</code> 및 <code>DB_TYPE_SEQUENCE</code>의 사용 위치와 기능</strong>:</p>
+<ul>
+<li><code>grep</code> 명령어를 통해 <code>PT_TYPE_SEQUENCE</code>와 <code>DB_TYPE_SEQUENCE</code>가 참조되는 파일들을 확인하고, 각 파일의 역할과 관련된 코드 분석을 진행합니다.</li>
+<li><code>csql_grammar</code>, <code>parse_tree_cl</code>, <code>type_checking</code>, <code>semantic_check</code> 등 필수 파일들을 포함하여, 기능 구현을 위한 코드 모듈 간의 연관성을 문서화합니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>PT_TYPE 및 DB_TYPE 확장을 통한 기능 구현</strong>:</p>
+<ul>
+<li><code>PT_TYPE_VECTOR</code> 추가를 위해 파서, 스토리지 엔진, 그리고 SQL 문법 분석에서 필요한 항목을 정의합니다.</li>
+<li>추가 작업이 필요한 주요 모듈 및 파일의 연결성을 조사하여, <strong>Storage Engine의 디스크 표현 구조를 변경하지 않는 범위에서 파서 단의 기능을 구현</strong>할 수 있도록 설계 방안을 검토합니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>정기 회의에서 논의된 핵심 사항 반영</strong>:</p>
+<ul>
+<li>10월 22일 회의에서 논의된 사항을 참고하여 <code>PT_TYPE_VECTOR</code>와 <code>DB_TYPE_SEQUENCE</code> 간의 연계 및 각 파일에 대한 수정 필요성을 검토하고, 필요한 경우 회의록에 명시된 방향을 반영합니다.</li>
+</ul>
+</li>
+</ol>
+<h3 id="results"><a class="header" href="#results">Results</a></h3>
+<p>조사 수행 결과는 문서 자료 형태로 제공됩니다. 문서에는 아래 항목을 포함합니다:</p>
+<ul>
+<li><code>PT_TYPE_SEQUENCE</code> 및 <code>DB_TYPE_SEQUENCE</code>의 참조 및 연관 파일 목록</li>
+<li>각 파일 내 관련 코드 설명 및 분석</li>
+<li><code>PT_TYPE_VECTOR</code>와 관련된 파일 수정 항목과 향후 확장성 평가</li>
+<li>필요 시, 코드 예제와 함께 기능 추가에 대한 상세 설명</li>
+</ul>
+<p><strong>예상 산출물</strong>:</p>
+<ul>
+<li>분석 보고서 (pdf)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cubrid에서-벡터-데이터-저장-및-조회"><a class="header" href="#cubrid에서-벡터-데이터-저장-및-조회">CUBRID에서 벡터 데이터 저장 및 조회</a></h1>
+<h2 id="description-1"><a class="header" href="#description-1">Description</a></h2>
+<h2 id="cubrid의-기능-확장의-일환으로-벡터-데이터를-저장하고-조회할-수-있도록-벡터-타입을-추가하고-데이터-직렬화-및-역직렬화를-지원하며-벡터-연산에-대한-쿼리-및-유틸리티-기능을-강화하는-것을-목표로-합니다"><a class="header" href="#cubrid의-기능-확장의-일환으로-벡터-데이터를-저장하고-조회할-수-있도록-벡터-타입을-추가하고-데이터-직렬화-및-역직렬화를-지원하며-벡터-연산에-대한-쿼리-및-유틸리티-기능을-강화하는-것을-목표로-합니다">CUBRID의 기능 확장의 일환으로, 벡터 데이터를 저장하고 조회할 수 있도록 벡터 타입을 추가하고, 데이터 직렬화 및 역직렬화를 지원하며 벡터 연산에 대한 쿼리 및 유틸리티 기능을 강화하는 것을 목표로 합니다</a></h2>
+<h2 id="goals-1"><a class="header" href="#goals-1">Goals</a></h2>
+<ol>
+<li><strong>벡터 데이터 타입 추가</strong>: CUBRID에 새로운 벡터 데이터 타입 (<code>VECTOR (DIM, TYPE)</code>)을 구현합니다.</li>
+<li><strong>데이터 직렬화 및 역직렬화</strong>: 벡터 데이터를 직렬화하여 디스크에 저장하고 역직렬화하여 조회할 수 있도록 합니다.</li>
+<li><strong>유틸리티 지원</strong>: 벡터 컬럼 스키마와 데이터 출력에 대한 CSQL 유틸리티 지원을 확장합니다.</li>
+</ol>
+<hr />
+<h2 id="description-2"><a class="header" href="#description-2">Description</a></h2>
+<ol>
+<li>
+<p><strong>벡터 데이터 타입 추가</strong>: CUBRID에 새로운 벡터 데이터 타입 (<code>VECTOR (DIM, TYPE)</code>)을 구현합니다.</p>
+<ul>
+<li><code>VECTOR</code> 컬럼 타입 추가.</li>
+<li><code>INSERT INTO tbl1 VALUES ...</code></li>
+<li><code>SELECT * from table_with_vector;</code></li>
+</ul>
+</li>
+<li>
+<p><strong>데이터 직렬화 및 역직렬화</strong>: 벡터 데이터를 직렬화하여 디스크에 저장하고 역직렬화하여 조회할 수 있도록 합니다.</p>
+</li>
+<li>
+<p><strong>유틸리티 지원</strong>: 벡터 컬럼 스키마와 데이터 출력에 대한 CSQL 유틸리티 지원을 확장합니다.</p>
+</li>
+</ol>
+<hr />
+<h2 id="expected-results"><a class="header" href="#expected-results">Expected Results</a></h2>
+<pre><code class="language-sql">CREATE TABLE table_with_vector( vec VECTOR float );
+</code></pre>
+<pre><code class="language-sql">INSERT INTO table_with_vectors VALUES ( {1, 2.0, 3.3} );
+</code></pre>
+<pre><code class="language-sql">SELECT * FROM table_with_vector;
+</code></pre>
+<pre><code class="language-txt">vec
+---
+[10, 20, 30]
+[20, 30, 40]
+</code></pre>
 
                     </main>
 
