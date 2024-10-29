@@ -122,3 +122,5 @@ PT_TYPE_VECTOR를 추가하기 위해 csql_grammar, parse_tree_cl, type_checking
 
 특히, csql_grammar 파일을 수정하여 PT_TYPE_VECTOR를 추가하고,
 유저로 하여금 간단한 SQL 질의를 통해 벡터 데이터를 저장하고 조회할 수 있도록 합니다.
+
+## 진행 과정
