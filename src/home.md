@@ -1,4 +1,6 @@
-# CUBVEC Planning and Product Management
+# CUBVEC Plan
+
+CUBVEC 기획
 
 ## 마일스톤 1: 벡터 데이터 저장 및 조회
 
