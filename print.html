@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="home.html"><strong aria-hidden="true">1.</strong> Complete Milstones</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> Milestone 1</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="milestone-1-1.html"><strong aria-hidden="true">1.1.1.</strong> Milestone 1-1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="epic-1.html"><strong aria-hidden="true">1.1.1.1.</strong> Epic 1</a></li><li class="chapter-item expanded "><a href="milestone-1-survey-1.html"><strong aria-hidden="true">1.1.1.2.</strong> Survey Issue</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="issue-creation-guide.html"><strong aria-hidden="true">2.</strong> Issue Creation Guide</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="home.html"><strong aria-hidden="true">1.</strong> Complete Milstones</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="milestone-1.html"><strong aria-hidden="true">1.1.</strong> Milestone 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="milestone-1-1.html"><strong aria-hidden="true">1.1.1.</strong> Milestone 1-1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="epic-1.html"><strong aria-hidden="true">1.1.1.1.</strong> Epic 1</a></li><li class="chapter-item expanded "><a href="milestone-1-survey-1.html"><strong aria-hidden="true">1.1.1.2.</strong> Survey Issue</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="issue-creation-guide.html"><strong aria-hidden="true">2.</strong> Issue Creation Guide</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -518,7 +518,16 @@
 </ul>
 <hr />
 <h3 id="not-included"><a class="header" href="#not-included">Not Included</a></h3>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-1-벡터-데이터-저장-및-조회"><a class="header" href="#milestone-1-벡터-데이터-저장-및-조회">Milestone 1: 벡터 데이터 저장 및 조회</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-1-1"><a class="header" href="#milestone-1-1">Milestone 1</a></h1>
+<h1 id="프로젝트-마일스톤"><a class="header" href="#프로젝트-마일스톤">프로젝트 마일스톤</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>마일스톤</th><th>구분</th><th>목적</th><th>비고</th><th>일정</th></tr></thead><tbody>
+<tr><td>1</td><td>1</td><td>벡터 데이터를 저장할 수 있다.</td><td></td><td></td></tr>
+<tr><td></td><td></td><td><code>csql</code>로 벡터 데이터를 조회할 수 있다 (전체 테이블 스캔).</td><td></td><td></td></tr>
+<tr><td></td><td>2</td><td><code>csql</code>을 통해 대량의 벡터 데이터를 벌크 로딩할 수 있다.</td><td>벌크 로딩 도구(tool)는 검토 후 변경 가능</td><td></td></tr>
+<tr><td></td><td></td><td><code>select</code> 시 벡터 타입에 대해 <code>=</code> 연산자를 제공한다. <br> 예: <code>select * from tbl1 where col1 = '[10, 20, 30]';</code></td><td>우선순위 변경 가능</td><td></td></tr>
+<tr><td></td><td>3</td><td>유클리드 거리를 이용하여 k-NN을 수행할 수 있다 (kd-tree 고려).</td><td>성능 측정 가능 시점<br> <em>비고</em>: 성능 측정 시 충돌이 발생하면 재구성 필요</td><td></td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-1-벡터-데이터-저장-및-조회"><a class="header" href="#milestone-1-벡터-데이터-저장-및-조회">Milestone 1: 벡터 데이터 저장 및 조회</a></h1>
 <div class="table-wrapper"><table><thead><tr><th>구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>설명</th><th>이슈 번호</th></tr></thead><tbody>
 <tr><td>1</td><td>데이터 타입</td><td>벡터 타입 추가</td><td>VECTOR (DIM, TYPE)</td><td></td><td></td></tr>
 <tr><td></td><td></td><td>타입 변환</td><td>문자열 to 벡터 타입</td><td>“varchar -&gt; vector<br>insert 시 ‘[10, 20, 30]’ -&gt; [10, 20, 30]”</td><td></td></tr>
